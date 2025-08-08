@@ -2149,6 +2149,31 @@ namespace LuaPlayer
         return 0;
     }
 
+    // Custom
+    int ReloadActionBar(lua_State* /*L*/, Player* player)
+    {
+        // remove glyphs and glyphs auras
+        for (uint8 i = 0; i < MAX_GLYPH_SLOT_INDEX; ++i)
+        {
+            if (uint32 glyph = player->GetGlyph(i))
+            {
+                if (GlyphPropertiesEntry const* gp = sGlyphPropertiesStore.LookupEntry(glyph))
+                {
+                    if (GlyphSlotEntry const* gs = sGlyphSlotStore.LookupEntry(player->GetGlyphSlot(i)))
+                    {
+                        player->RemoveAurasDueToSpell(sGlyphPropertiesStore.LookupEntry(glyph)->SpellId);
+                        player->SetGlyph(i, 0, true);       // remove glyphs
+                        player->SendTalentsInfoData(false); // this is somewhat an in-game glyph realtime update (apply/remove)
+                    }
+                }
+            }
+        }
+
+        player->ReloadActionBar();
+
+        return 0;
+    }
+
     /**
      * Sends a summon request to the player from the given summoner
      *
