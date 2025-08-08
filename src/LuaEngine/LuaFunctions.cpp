@@ -40,6 +40,7 @@ extern "C"
 #include "AchievementMethods.h"
 #include "ItemTemplateMethods.h"
 #include "RollMethods.h"
+#include "LootMethods.h"
 #include "TicketMethods.h"
 #include "SpellInfoMethods.h"
 
@@ -787,6 +788,8 @@ ElunaRegister<Creature> CreatureMethods[] =
     { "GetShieldBlockValue", &LuaCreature::GetShieldBlockValue },
     { "GetDBTableGUIDLow", &LuaCreature::GetDBTableGUIDLow },
     { "GetCreatureFamily", &LuaCreature::GetCreatureFamily },
+    { "GetLoot", &LuaCreature::GetLoot },
+    { "AllLootRemoved",&LuaCreature::AllLootRemoved },
 
     // Setters
     { "SetRegeneratingHealth", &LuaCreature::SetRegeneratingHealth },
@@ -1331,6 +1334,29 @@ ElunaRegister<Roll> RollMethods[] =
     { NULL, NULL }
 };
 
+ElunaRegister<Loot> LootMethods[] =
+{
+    // Get
+    { "GetMoney", &LuaLoot::GetMoney },
+    { "GetItems", &LuaLoot::GetItems },
+    { "GetUnlootedCount", &LuaLoot::GetUnlootedCount },
+
+    // Set
+    { "AddItem", &LuaLoot::AddItem },
+    { "RemoveItem", &LuaLoot::RemoveItem },
+    { "SetMoney", &LuaLoot::SetMoney },
+    { "SetUnlootedCount", &LuaLoot::SetUnlootedCount },
+    { "UpdateItemIndex", &LuaLoot::UpdateItemIndex },
+    { "SetItemLooted", &LuaLoot::SetItemLooted },
+
+    // Boolean
+    { "IsLooted", &LuaLoot::IsLooted },
+    { "HasItem", &LuaLoot::HasItem },
+    { "Clear", &LuaLoot::Clear },
+
+    { NULL, NULL }
+};
+
 ElunaRegister<GmTicket> TicketMethods[] =
 {
     { "IsClosed", &LuaTicket::IsClosed },
@@ -1687,6 +1713,9 @@ void RegisterFunctions(Eluna* E)
 
     ElunaTemplate<Roll>::Register(E, "Roll");
     ElunaTemplate<Roll>::SetMethods(E, RollMethods);
+
+    ElunaTemplate<Loot>::Register(E, "Loot");
+    ElunaTemplate<Loot>::SetMethods(E, LootMethods);
 
     ElunaTemplate<GmTicket>::Register(E, "Ticket");
     ElunaTemplate<GmTicket>::SetMethods(E, TicketMethods);

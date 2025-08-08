@@ -750,6 +750,19 @@ namespace LuaCreature
         return 1;
     }
 
+    // AoE Loot
+    int GetLoot(lua_State* L, Creature* creature)
+    {
+        Eluna::Push(L, &creature->loot);
+        return 1;
+    }
+
+    int AllLootRemoved(lua_State* /*L*/, Creature* creature)
+    {
+        creature->AllLootRemovedFromCorpse();
+        return 0;
+    }
+
     /**
      * Returns the [Creature]'s NPC flags.
      *

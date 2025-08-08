@@ -22,6 +22,7 @@
 #include "ElunaUtility.h"
 #include "HttpManager.h"
 #include "EventEmitter.h"
+#include "LootMgr.h"
 #include "TicketMgr.h"
 #include <mutex>
 #include <memory>
