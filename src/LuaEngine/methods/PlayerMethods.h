@@ -3426,7 +3426,11 @@ namespace LuaPlayer
         uint32 glyphId = Eluna::CHECKVAL<uint32>(L, 2);
         uint32 slotIndex = Eluna::CHECKVAL<uint32>(L, 3);
 
-        player->SetGlyph(slotIndex, glyphId, true);
+        if (GlyphPropertiesEntry const* gp = sGlyphPropertiesStore.LookupEntry(glyphId))
+        {
+            player->CastSpell(player, gp->SpellId, true);
+            player->SetGlyph(slotIndex, glyphId, true);
+        }
         player->SendTalentsInfoData(false); // Also handles GlyphData
 
         return 0;
