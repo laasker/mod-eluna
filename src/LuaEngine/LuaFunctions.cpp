@@ -671,6 +671,7 @@ ElunaRegister<Player> PlayerMethods[] =
     { "LearnTalent", &LuaPlayer::LearnTalent },
 
     { "RunCommand", &LuaPlayer::RunCommand },
+    { "ApplyActionButton", &LuaPlayer::ApplyActionButton },
     { "SetGlyph", &LuaPlayer::SetGlyph },
     { "GetGlyph", &LuaPlayer::GetGlyph },
     { "RemoveArenaSpellCooldowns", &LuaPlayer::RemoveArenaSpellCooldowns },

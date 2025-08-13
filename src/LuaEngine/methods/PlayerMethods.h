@@ -3451,6 +3451,21 @@ namespace LuaPlayer
         return 0;
     }
 
+    int ApplyActionButton(lua_State* L, Player* player)
+    {
+        uint8 button = Eluna::CHECKVAL<uint8>(L, 2);
+        uint32 action = Eluna::CHECKVAL<uint32>(L, 3);
+        uint8 type = Eluna::CHECKVAL<uint8>(L, 4);
+
+        //player->addActionButton(button, action, type);
+        if (ActionButton* actionbutton = player->addActionButton(button, action, type))
+        {
+            actionbutton->uState = ACTIONBUTTON_NEW;
+        }
+
+        return 0;
+    }
+
     /**
     * Adds a glyph specified by `glyphId` to the [Player]'s current talent specialization into the slot with the index `slotIndex`
     *
