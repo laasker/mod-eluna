@@ -2149,8 +2149,9 @@ namespace LuaPlayer
         return 0;
     }
 
-    // Custom
-    int ReloadActionBar(lua_State* /*L*/, Player* player)
+
+    // Customs
+    int RemoveGlyphs(lua_State* /*L*/, Player* player)
     {
         // remove glyphs and glyphs auras
         for (uint8 i = 0; i < MAX_GLYPH_SLOT_INDEX; ++i)
@@ -2169,6 +2170,8 @@ namespace LuaPlayer
             }
         }
 
+        return 0;
+    }
         player->ReloadActionBar();
 
         return 0;
