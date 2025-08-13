@@ -2172,6 +2172,8 @@ namespace LuaPlayer
 
         return 0;
     }
+    int ReloadActionBar(lua_State* /*L*/, Player* player)
+    {
         player->ReloadActionBar();
 
         return 0;
@@ -3426,14 +3428,34 @@ namespace LuaPlayer
      */
     int LearnTalent(lua_State* L, Player* player)
     {
-        uint32 id = Eluna::CHECKVAL<uint32>(L, 2);
-        uint32 rank = Eluna::CHECKVAL<uint32>(L, 3);
+        //uint32 id = Eluna::CHECKVAL<uint32>(L, 2);
+        //uint32 rank = Eluna::CHECKVAL<uint32>(L, 3);
 
-        player->LearnTalent(id, rank);
-        player->SendTalentsInfoData(false);
+        //player->LearnTalent(id, rank);
+        //player->SendTalentsInfoData(false);
+
+        //
+        uint32 spellId = Eluna::CHECKVAL<uint32>(L, 2);
+
+        for (uint32 i = 0; i < sTalentStore.GetNumRows(); ++i)
+        {
+            if (TalentEntry const* talent = sTalentStore.LookupEntry(i))
+            {
+                for (uint8 rank = 0; rank < MAX_TALENT_RANK; ++rank)
+                {
+                    if (talent->RankID[rank] == spellId)
+                    {
+                        player->LearnTalent(talent->TalentID, rank);
+                        player->SendTalentsInfoData(false);
+                        return 0;
+                    }
+                }
+            }
+        }
 
         return 0;
     }
+
     /**
     * Run a chat command as if the player typed it into the chat
     *
